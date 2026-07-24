@@ -24,8 +24,7 @@ public class Tarea1_P2 {
     public static void Menu(){
      String menu = """
                    1. Inventario de Autos 
-                   ..... 
-                   // aqui van los de recursion
+                   2. Recursion
                    0. Salir 
                    """;
     
@@ -44,6 +43,11 @@ public class Tarea1_P2 {
                  break; 
              }// corchete de case 1 
              
+             case 2:{
+                 Recursion recursion = new Recursion(); 
+                 recursion.menuRecursion();
+                 
+             }
             
              default:
                  try {

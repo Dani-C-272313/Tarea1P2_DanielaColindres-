@@ -60,12 +60,14 @@ public class Inventario {
                 }// corchete de case 4
 
                 case 5: {
-                    // Vehiculo mas antiguo 
+                    // Vehiculo mas antiguo
+                    másAntiguo();
                     break;
                 }// corchete de case 5
 
                 case 6: {
                     //Vehiculos de color rojo 
+                    listarRojo();
                     break;
                 }// corchete de case 6
 
@@ -385,6 +387,16 @@ public class Inventario {
             JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
             return;
         }
+          
+          if (inventario.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El inventario se ha quedado vacío.");
+            return;
+        }
+        
+ char resp = 's';
+
+        while (resp == 's') {
+          
         int opcion = 0;
         String listaMatricula = "-----------------------\n\n";
         for (int i = 0; i < inventario.size(); i++) {
@@ -396,13 +408,13 @@ public class Inventario {
         
         if (opcion < 1 || opcion > inventario.size()) {
         JOptionPane.showMessageDialog(null, "Número inválido.");
-        return;
+       continue; //lo vimos con el inge rafa
     }
+        
+        
           int nue_opcion = opcion - 1;
         inventario.get((nue_opcion));
-        char resp = 's';
-
-        while (resp == 's') {
+       
              
             JOptionPane.showMessageDialog(null, "eliminando vehiculo....");
             
@@ -421,13 +433,151 @@ public class Inventario {
                             }
                         }
                     }
+            
+                inventario.remove(nue_opcion);
+            JOptionPane.showMessageDialog(null, "¡Vehículo eliminado con éxito!");
             }
         
-            inventario.remove(nue_opcion);
+        String respuesta = JOptionPane.showInputDialog(null, "Desea eliminar otro auto? s/n ");
+            resp = respuesta.charAt(0);
             
         }
     
+    
+    private void listarRojo(){
+    if (verificar() == true) {
+            JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
+            return;
+        }
+        ArrayList<Carritos> rojosCopia = new ArrayList<>(autoRojo);
 
+        int n = rojosCopia.size();
+        for (int i = 0; i < n - 1; i++) { // las vueltas de comparar 
+            for (int j = 0; j < n - i - 1; j++) { // las letras a comparar
+
+                String modelo1 = rojosCopia.get(j).getModelo().toLowerCase();
+                String modelo2 = rojosCopia.get(j + 1).getModelo().toLowerCase();
+
+                // Banderas para comparar letra por letra
+                int k = 0;
+                boolean necesitaIntercambio = false; // por eso es falso
+                boolean Identicos = true; //supongo aqui que son identicos
+
+                while (k < modelo1.length() && k < modelo2.length()) {
+                    char letra1 = modelo1.charAt(k);
+                    char letra2 = modelo2.charAt(k);
+
+                    if (letra1 != letra2) {
+                        Identicos = false;
+
+                        if (letra1 > letra2) {
+                            necesitaIntercambio = true;
+                        }
+                        break;
+                    }
+
+                    k++;
+                }
+
+                if (Identicos && modelo1.length() > modelo2.length()) {
+                    necesitaIntercambio = true;
+                }
+
+                if (necesitaIntercambio) {
+                    Carritos temporal = rojosCopia.get(j);
+                    rojosCopia.set(j, rojosCopia.get(j + 1));
+                    rojosCopia.set(j + 1, temporal);
+                }
+
+            }
+        }
+         String mensaje = "-------------------\n";
+        for (int i = 0; i < rojosCopia.size(); i++) {
+            mensaje += rojosCopia.get(i) + "\n\n";
+        }
+
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
+    
+    private void másAntiguo(){
+        if (verificar() == true) {
+        JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
+        return;
+    }
+    
+
+    ArrayList<Carritos> inventarioCopia = new ArrayList<>(inventario);
+
+    int n = inventarioCopia.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+
+            int anio1 = inventarioCopia.get(j).getAñoFabicacion();
+            int anio2 = inventarioCopia.get(j + 1).getAñoFabicacion();
+
+         
+            if (anio1 < anio2) {
+                Carritos temporal = inventarioCopia.get(j);
+                inventarioCopia.set(j, inventarioCopia.get(j + 1));
+                inventarioCopia.set(j + 1, temporal);
+            }
+        }
+    }
+    
+    int last = inventarioCopia.size() - 1;
+
+
+    String mens = "--- El carro más clasico ---\n";
+    mens += inventarioCopia.get(last) + "\n\n";
+    
+    JOptionPane.showMessageDialog(null, mens);
+}
+
+private void diferenciaAños(){
+if (verificar() == true) {
+        JOptionPane.showMessageDialog(null, "Error, no se puede porque el inventario está vacío");
+        return;
+    }
+
+    // 1. Mostrar la lista con sus índices o matrículas para que el usuario elija
+    String listaAutos = "--- SELECCIONE EL PRIMER AUTO ---\n";
+    for (int i = 0; i < inventario.size(); i++) {
+        listaAutos += i + ". " + inventario.get(i).getModelo() + " - Matrícula: " + inventario.get(i).getMatricula() + "\n";
+    }
+
+    int indice1 = Integer.parseInt(JOptionPane.showInputDialog(null, listaAutos + "\nIngrese el índice o número del primer auto:"));
+
+    // 2. Mostrar la lista de nuevo para el segundo auto
+    listaAutos = "--- SELECCIONE EL SEGUNDO AUTO ---\n";
+    for (int i = 0; i < inventario.size(); i++) {
+        listaAutos += i + ". " + inventario.get(i).getModelo() + " - Matrícula: " + inventario.get(i).getMatricula() + "\n";
+    }
+
+    int indice2 = Integer.parseInt(JOptionPane.showInputDialog(null, listaAutos + "\nIngrese el índice o número del segundo auto:"));
+
+    // 3. Validar que los índices existan
+    if (indice1 >= 0 && indice1 < inventario.size() && indice2 >= 0 && indice2 < inventario.size()) {
+        Carritos auto1 = inventario.get(indice1);
+        Carritos auto2 = inventario.get(indice2);
+
+        // 4. Calcular la diferencia (por ejemplo, diferencia de años en valor absoluto)
+        int diferenciaAnios = Math.abs(auto1.getAñoFabicacion()- auto2.getAñoFabicacion());
+        
+        // Si quieres diferencia de precios, puedes cambiarlo por: double diferenciaPrecio = Math.abs(auto1.getPrecio() - auto2.getPrecio());
+
+        // 5. Mostrar el resultado
+        JOptionPane.showMessageDialog(null, 
+            "--- DIFERENCIA ENTRE AUTOS ---\n" +
+            "Auto 1: " + auto1.getModelo() + " (Año: " + auto1.getAñoFabicacion() + ")\n" +
+            "Auto 2: " + auto2.getModelo() + " (Año: " + auto2.getAñoFabicacion() + ")\n\n" +
+            "Diferencia de años: " + diferenciaAnios + " años"
+        );
+    } else {
+        JOptionPane.showMessageDialog(null, "Error: Uno o ambos índices son inválidos.");
+    }
+}    
+    
     private boolean verificar() {
         boolean ver = false;
         if (inventario.size() == 0 || inventario.size() < 0) {
@@ -435,5 +585,8 @@ public class Inventario {
         }
         return ver;
     }
+    
+    
+    
 
 }// corchete principal
