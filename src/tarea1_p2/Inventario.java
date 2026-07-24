@@ -254,6 +254,10 @@ JOptionPane.showMessageDialog(null, mensaje);
            
        }
        inventario.get((opcion-1));
+       char resp = 's';
+   
+
+       while(resp == 's'){
        String menu_cambios = """
                              ------------------------------
                              1. Marca
@@ -261,17 +265,24 @@ JOptionPane.showMessageDialog(null, mensaje);
                              3. Color
                              4. Año de Fabricacion 
                              5. Precio
+                             0. salir 
                              
                              Ingrese el numero del cual quiere modificar...
                              """;
        
       int nue_opcion = opcion -1; 
        int op = Integer.parseInt(JOptionPane.showInputDialog(null,menu_cambios));
-       
+
        switch(op){
+              
            case 1:{
                inventario.get(nue_opcion).getMarca();
                String nueva_marca = JOptionPane.showInputDialog(null, "Ingrese la nueva marca");
+                while(nueva_marca.isBlank() || nueva_marca.isEmpty()){
+               nueva_marca = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la matrícula del auto:");
+                
+            }
+                
                inventario.get(nue_opcion).setMarca(nueva_marca);
                JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
                break; 
@@ -280,6 +291,12 @@ JOptionPane.showMessageDialog(null, mensaje);
            case 2:{
                  inventario.get(nue_opcion).getModelo();
                String nuevo_modelo = JOptionPane.showInputDialog(null, "Ingrese el nuevo modelo");
+               
+                 while(nuevo_modelo.isBlank() || nuevo_modelo.isEmpty()){
+               nuevo_modelo = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la matrícula del auto:");
+                
+            }
+                 
                inventario.get(nue_opcion).setModelo(nuevo_modelo);
                JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
                break; 
@@ -287,14 +304,76 @@ JOptionPane.showMessageDialog(null, mensaje);
            case 3:{
                  inventario.get(nue_opcion).getColor();
                String nuevo_color = JOptionPane.showInputDialog(null, "Ingrese el nuevo color");
+               
+                 while(nuevo_color.isBlank() || nuevo_color.isEmpty()){
+               nuevo_color = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\n Ingrese la matrícula del auto:");
+                
+            }
+      if(nuevo_color.equalsIgnoreCase("rojo")){
+            inventario.get(nue_opcion).setColor(nuevo_color);
+             autoRojo.add(inventario.get(nue_opcion));
+       break; 
+       }
+      
+      else if(inventario.get(nue_opcion).getColor().equalsIgnoreCase("rojo")){
+          boolean encontrar = false;
+          
+          String matricula_buscar = inventario.get(nue_opcion).getMatricula();
+          for (int i = 0; i < autoRojo.size(); i++) {
+    String matriculaActual = autoRojo.get(i).getMatricula();
+    
+    
+    if (matriculaActual.equalsIgnoreCase(matricula_buscar)) {
+        System.out.println("¡Carro encontrado en la lista de rojos!\n\n" + autoRojo.get(i));
+        encontrar = true;
+        break; 
+    }
+}
+      }
+                 
                inventario.get(nue_opcion).setColor(nuevo_color);
                JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               
+            
                break; 
+               
+               /*if (autoRojo.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "No hay ningún carro registrado en la lista de rojos.");
+    return; 
+}
+
+boolean encontrado = false;
+
+// 2. Recorremos el arreglo de autoRojo usando TU variable existente
+for (int i = 0; i < autoRojo.size(); i++) {
+    String matriculaActual = autoRojo.get(i).getMatricula();
+    
+    // Comparamos la matrícula del carro actual con la variable que ya tienes guardada
+    if (matriculaActual.equalsIgnoreCase(matriculaBuscada)) {
+        JOptionPane.showMessageDialog(null, "¡Carro encontrado en la lista de rojos!\n\n" + autoRojo.get(i));
+        encontrado = true;
+        break; 
+    }
+}
+
+// 3. Si terminó el ciclo y no se encontró
+if (!encontrado) {
+    JOptionPane.showMessageDialog(null, "El carro con la matrícula " + matriculaBuscada + " no está en la lista de rojos.");
+}*/
+               
            }
+           
            
            case 4: {
                  inventario.get(nue_opcion).getAñoFabicacion();
                int nuevo_añoF = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo Año de Fabricacion"));
+               
+               while(nuevo_añoF<1886 || nuevo_añoF >2026){
+               nuevo_añoF = Integer.parseInt(JOptionPane.showInputDialog(null, "Invalido! O no se habia ni creado el auto o estas viviendo en el futuro.\n Ingrese el año de fabricacion del auto:"));
+                
+            }
+            
+               
                inventario.get(nue_opcion).setAñoFabicacion(nuevo_añoF);
                JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
                break;
@@ -303,16 +382,45 @@ JOptionPane.showMessageDialog(null, mensaje);
            case 5:{
                      inventario.get(nue_opcion).getPrecio();
                float nuevo_precio = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingrese el nuevo precio"));
+                while(nuevo_precio<0 ){
+               nuevo_precio = Float.parseFloat(JOptionPane.showInputDialog(null, "¡Invalido! El precio no puede ser negativo.\n Ingrese el precio del auto:"));
+                
+            }
+               
                inventario.get(nue_opcion).setPrecio(nuevo_precio);
                JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
                break; 
            }
            
+           case 0:{
+               break; 
+           }
            
+             default:
+                 try {
+                    throw new Exception();
+            } catch (Exception e) {
+            
+                String mensajeExcception = "";
+            for(int i = 0; i<51; i++){
+               mensajeExcception += "Nuh huh, exception \n";
+            
+            }  
+            JOptionPane.showMessageDialog(null,mensajeExcception);
+                break; 
            
            }
            
+       }// corchete del switch
        
+     
+       
+        String respuesta = JOptionPane.showInputDialog(null, "Desea modificar otro auto? s/n ");
+       resp = respuesta.charAt(0);
+       
+        
+       }//coechwte del while 
+        
        
    }   //corchete del metodo 
       
