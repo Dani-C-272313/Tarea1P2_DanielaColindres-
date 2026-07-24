@@ -47,6 +47,7 @@ public class Inventario {
              
              case 3:{
               //Modificar 
+              modificar(); 
                  break; 
              }// corchete de case 3
              
@@ -101,7 +102,8 @@ public class Inventario {
       
    private void Agregar(){ 
        char resp = 's';
-       
+   
+
        while(resp == 's'){
        if (inventario.size()>50){
            JOptionPane.showMessageDialog(null,"El inventatrio esta lleno no se puede agregar un auto más");
@@ -177,6 +179,10 @@ public class Inventario {
       
       public void Listar() {
    
+if (verificar() ==true){
+    JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
+    return; 
+}
 ArrayList<Carritos> inventarioCopia = new ArrayList<>(inventario);
 
 int n = inventarioCopia.size();
@@ -234,6 +240,25 @@ JOptionPane.showMessageDialog(null, mensaje);
 }
       
    
+   private void modificar(){
+       if (verificar() ==true){
+    JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
+    return; 
+}
+       String listaMatricula = "-----------------------\n\n"; 
+       for(int i = 0; i< inventario.size(); i++){
+           listaMatricula += (i+1)+ "\n" + inventario.get(i).getMatricula()+ "\n";
+           JOptionPane.showInputDialog(null,listaMatricula);
+           
+       }
+   }   
       
-      
+   
+   private boolean verificar(){
+       boolean ver = false; 
+       if ( inventario.size() == 0 || inventario.size() <0){
+           ver=true;
+       }
+       return ver; 
+   }
 }// corchete principal
