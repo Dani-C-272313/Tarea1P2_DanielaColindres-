@@ -4,7 +4,7 @@
  */
 package tarea1_p2;
 import javax.swing.JOptionPane; 
-import java.util.ArrayList; 
+
 
 /**
  *
@@ -15,8 +15,7 @@ public class Tarea1_P2 {
     /**
      * @param args the command line arguments
      */
-     static ArrayList<Carritos> inventario = new ArrayList<>();
-      static ArrayList<Carritos> autoRojo = new ArrayList<>();
+     
     
     public static void main(String[] args) {
      Menu(); 
@@ -63,10 +62,10 @@ public class Tarea1_P2 {
          
          opcion = Integer.parseInt(JOptionPane.showInputDialog(null, menu));
        
-     }
+     }//corchete de la opcion 
      
      
      
-}
+}// corchete del metodo menu
     
-}
+}// corchete de la clase 

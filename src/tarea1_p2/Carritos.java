@@ -89,7 +89,7 @@ public class Carritos {
 
     @Override
     public String toString() {
-        return "Carritos{" + "matricula=" + matricula + ", marca=" + marca + ", color=" + color + ", modelo=" + modelo + ", a\u00f1oFabicacion=" + añoFabicacion + ", precio=" + precio + '}';
+        return "matricula: " + matricula + "\n marca: " + marca + "\n color: " + color + "\n modelo: " + modelo + "\n añoFabicacion: " + añoFabicacion + "\n precio: " + precio;
     }
     
     
