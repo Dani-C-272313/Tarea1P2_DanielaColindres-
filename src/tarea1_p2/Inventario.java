@@ -6,6 +6,7 @@ package tarea1_p2;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import tarea1_p2.Carritos;
 
 /**
  *
@@ -245,13 +246,75 @@ JOptionPane.showMessageDialog(null, mensaje);
     JOptionPane.showMessageDialog(null, "Error, no se puede por que el inventario esta vacio");
     return; 
 }
+       int opcion =0; 
        String listaMatricula = "-----------------------\n\n"; 
        for(int i = 0; i< inventario.size(); i++){
-           listaMatricula += (i+1)+ "\n" + inventario.get(i).getMatricula()+ "\n";
-           JOptionPane.showInputDialog(null,listaMatricula);
+           listaMatricula += (i+1) + inventario.get(i).getMatricula()+ "\n";
+          opcion = Integer.parseInt(JOptionPane.showInputDialog(null,listaMatricula));
            
        }
-   }   
+       inventario.get((opcion-1));
+       String menu_cambios = """
+                             ------------------------------
+                             1. Marca
+                             2. Modelo
+                             3. Color
+                             4. Año de Fabricacion 
+                             5. Precio
+                             
+                             Ingrese el numero del cual quiere modificar...
+                             """;
+       
+      int nue_opcion = opcion -1; 
+       int op = Integer.parseInt(JOptionPane.showInputDialog(null,menu_cambios));
+       
+       switch(op){
+           case 1:{
+               inventario.get(nue_opcion).getMarca();
+               String nueva_marca = JOptionPane.showInputDialog(null, "Ingrese la nueva marca");
+               inventario.get(nue_opcion).setMarca(nueva_marca);
+               JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               break; 
+           }
+           
+           case 2:{
+                 inventario.get(nue_opcion).getModelo();
+               String nuevo_modelo = JOptionPane.showInputDialog(null, "Ingrese el nuevo modelo");
+               inventario.get(nue_opcion).setModelo(nuevo_modelo);
+               JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               break; 
+           }
+           case 3:{
+                 inventario.get(nue_opcion).getColor();
+               String nuevo_color = JOptionPane.showInputDialog(null, "Ingrese el nuevo color");
+               inventario.get(nue_opcion).setColor(nuevo_color);
+               JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               break; 
+           }
+           
+           case 4: {
+                 inventario.get(nue_opcion).getAñoFabicacion();
+               int nuevo_añoF = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo Año de Fabricacion"));
+               inventario.get(nue_opcion).setAñoFabicacion(nuevo_añoF);
+               JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               break;
+           }
+           
+           case 5:{
+                     inventario.get(nue_opcion).getPrecio();
+               float nuevo_precio = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingrese el nuevo precio"));
+               inventario.get(nue_opcion).setPrecio(nuevo_precio);
+               JOptionPane.showMessageDialog(null, " --------------------------- \n"+inventario.get(nue_opcion));
+               break; 
+           }
+           
+           
+           
+           }
+           
+       
+       
+   }   //corchete del metodo 
       
    
    private boolean verificar(){
