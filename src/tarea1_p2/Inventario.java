@@ -180,19 +180,51 @@ public class Inventario {
 ArrayList<Carritos> inventarioCopia = new ArrayList<>(inventario);
 
 int n = inventarioCopia.size();
-for (int i = 0; i < n - 1; i++) {
-    for (int j = 0; j < n - i - 1; j++) {
+for (int i = 0; i < n - 1; i++) { // las vueltas de comparar 
+    for (int j = 0; j < n - i - 1; j++) { // las letras a comparar
        
-        if (inventarioCopia.get(j).getModelo().compareToIgnoreCase(inventarioCopia.get(j + 1).getModelo()) > 0) {
+       String modelo1 = inventarioCopia.get(j).getModelo().toLowerCase();
+        String modelo2 = inventarioCopia.get(j + 1).getModelo().toLowerCase();
+        
+        // Banderas para comparar letra por letra
+        int k = 0;
+        boolean necesitaIntercambio = false; // por eso es falso
+        boolean Identicos = true; //supongo aqui que son identicos
+        
+ 
+        while (k < modelo1.length() && k < modelo2.length()) {
+            char letra1 = modelo1.charAt(k);
+            char letra2 = modelo2.charAt(k);
+            
+            if (letra1 != letra2) {
+                Identicos = false;
+               
+                if (letra1 > letra2) {
+                    necesitaIntercambio = true;
+                }
+                break; 
+            }
+            
+            k++;
+        }
+        
+
+        if (Identicos && modelo1.length() > modelo2.length()) {
+            necesitaIntercambio = true;
+        }
+      
+        if (necesitaIntercambio) {
             Carritos temporal = inventarioCopia.get(j);
             inventarioCopia.set(j, inventarioCopia.get(j + 1));
             inventarioCopia.set(j + 1, temporal);
         }
+    
+
     }
 }
+    
 
-// 3. Juntamos los elementos de la copia para mostrarlos en la ventana
-String mensaje = "-------------------";
+String mensaje = "-------------------\n";
 for (int i = 0; i < inventarioCopia.size(); i++) {
     mensaje +=  inventarioCopia.get(i) + "\n\n";
 }
@@ -201,7 +233,7 @@ for (int i = 0; i < inventarioCopia.size(); i++) {
 JOptionPane.showMessageDialog(null, mensaje);
 }
       
-      
+   
       
       
 }// corchete principal
