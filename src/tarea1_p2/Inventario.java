@@ -41,6 +41,7 @@ public class Inventario {
              
              case 2:{
               //Listar 
+              Listar();
                  break; 
              }// corchete de case 2
              
@@ -99,7 +100,9 @@ public class Inventario {
       
       
    private void Agregar(){ 
+       char resp = 's';
        
+       while(resp == 's'){
        if (inventario.size()>50){
            JOptionPane.showMessageDialog(null,"El inventatrio esta lleno no se puede agregar un auto más");
            return;  //no se preocupe inge, se que cuando pongo esto es pq me va a sacar del metodo inmediatamente cuando entre al if
@@ -108,7 +111,7 @@ public class Inventario {
        else{
             String matricula = JOptionPane.showInputDialog("Ingrese la matricula del auto: ");
             
-            while(matricula.isBlank() || matricula.isEmpty()){
+            while(matricula.isBlank() || matricula.isEmpty() || matricula.length()<6 || matricula.length()>7){
                matricula = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la matrícula del auto:");
                 
             }
@@ -120,13 +123,13 @@ public class Inventario {
                marca = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la marca del auto:");
                 
             }
-            String modelo = JOptionPane.showInputDialog("Ingrese la matricula del auto: ");
+            String modelo = JOptionPane.showInputDialog("Ingrese la modelo del auto: ");
             while(modelo.isBlank() || modelo.isEmpty()){
                modelo = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la modelo del auto:");
                 
             }
             
-            String color = JOptionPane.showInputDialog("Ingrese la matricula del auto: ");
+            String color = JOptionPane.showInputDialog("Ingrese la color del auto: ");
             while(color.isBlank() || color.isEmpty()){
                color = JOptionPane.showInputDialog(null, "Invalido! No se puede dejar vacío o en blanco.\nIngrese la color del auto:");
                 
@@ -164,12 +167,39 @@ public class Inventario {
        
        }//corchete del else
       
-      
+       String respuesta = JOptionPane.showInputDialog(null, "Desea agregar otro auto? ");
+       resp = respuesta.charAt(0);
+       
+       }//corchete del resp
        
        
    }  // corchete del metodo agregar  
       
-      
+      public void Listar() {
+   
+ArrayList<Carritos> inventarioCopia = new ArrayList<>(inventario);
+
+int n = inventarioCopia.size();
+for (int i = 0; i < n - 1; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+       
+        if (inventarioCopia.get(j).getModelo().compareToIgnoreCase(inventarioCopia.get(j + 1).getModelo()) > 0) {
+            Carritos temporal = inventarioCopia.get(j);
+            inventarioCopia.set(j, inventarioCopia.get(j + 1));
+            inventarioCopia.set(j + 1, temporal);
+        }
+    }
+}
+
+// 3. Juntamos los elementos de la copia para mostrarlos en la ventana
+String mensaje = "-------------------";
+for (int i = 0; i < inventarioCopia.size(); i++) {
+    mensaje +=  inventarioCopia.get(i) + "\n\n";
+}
+
+
+JOptionPane.showMessageDialog(null, mensaje);
+}
       
       
       

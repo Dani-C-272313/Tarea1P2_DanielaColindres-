@@ -38,6 +38,8 @@ public class Tarea1_P2 {
          switch(opcion){
              
              case 1:{
+                 Inventario inventario = new Inventario();
+                inventario.menuInventario();
                  System.out.println("jaja");
                  break; 
              }// corchete de case 1 
